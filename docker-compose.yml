@@ -1,0 +1,80 @@
+version: '3.8'
+services:
+
+  #PHP Service
+  php:
+    image: chapacua/php:0.3.0
+    container_name: php
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: php
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - net
+  #Nginx Service
+  webserver:
+    image: chapacua/nginx:0.3.1
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "9001:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - net
+  # Database
+  db:
+    image: mysql:5.7
+    container_name: db
+    volumes:
+      - data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    networks:
+      - net
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db
+    container_name: pma
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '9080:80'
+    environment:
+      PMA_HOST: ${PMA_HOST}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - net     
+      #PHP Service
+  node:
+    image: node:latest
+    container_name: node
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: node
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - net
+#Docker Networks
+networks:
+  net:
+    driver: bridge
+#Volumes
+volumes:
+  data:

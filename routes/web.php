@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+
+/*Blog resources */
+Route::get('blog/category/{slug}', [BlogController::class, 'category'])->name('blog.category');
+Route::get('blog/category/all/{slug}', [BlogController::class, 'categoryAll'])->name('blog.category_all');
+Route::resource('blog', BlogController::class)->except([
+    'index'
+]);

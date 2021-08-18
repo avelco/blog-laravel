@@ -22,3 +22,8 @@ Route::get('blog/category/all/{slug}', [BlogController::class, 'categoryAll'])->
 Route::resource('blog', BlogController::class)->except([
     'index'
 ]);
+
+
+Route::get('admin', function(){
+    return view('admin.dashboard');
+});

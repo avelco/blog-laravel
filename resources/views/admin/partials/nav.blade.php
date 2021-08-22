@@ -6,7 +6,7 @@
 					<div class="flex space-x-7">
 						<div>
 							<!-- Website Logo -->
-							<a href="#" class="flex items-center py-4 px-2">
+							<a href="/admin/dashboard" class="flex items-center py-4 px-2">
 								<i class="fas fa-moon text-blue-400 pr-3"></i> Alejo's blog admin panel
 							</a>
 						</div>

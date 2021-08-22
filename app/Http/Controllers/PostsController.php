@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Tag;
 use App\Models\Post;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PostsController extends Controller
 {
+    
+    protected $duarded = [];
+    
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +31,9 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -36,7 +44,19 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        
+        $post->title  = $request->get('title');
+        $post->body = $request->get('content');
+        $post->excerpt = $request->get('excerpt');
+        $post->published_at = Carbon::parse($request->get('published_at'));
+        $post->category_id = $request->get('category');
+        
+        $post->save();
+        
+        $post->tags()->attach($request->get('tags'));
+        
+        return back()->with('flash', 'Post '. $post->title. ' was created');
     }
 
     /**

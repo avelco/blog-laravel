@@ -25,42 +25,48 @@
 				                	<div class="grid grid-rows-2 grid-flow-col gap-4">
 										<div class="col-span-1 ">
 											<label class="text-xl text-gray-600">Title <span class="text-red-500">*</span></label></br>
-											<input type="text" class="border-2 rounded {{ $errors->has('title') ? 'border-red-700' : '' }} border-gray-300 border-gray-300 p-2 w-full" name="title" id="title" value="{{ old('title') }}" required>
+											<input type="text" class="border-2 rounded {{ $errors->has('title') ? 'border-red-700' : 'border-gray-300' }}  p-2 w-full" name="title" id="title" value="{{ old('title') }}">
+											{!! $errors->first('title', '<span class="text-red-500"> :message </span>')!!} 
 										</div>
 										<div class="row-span-1 col-span-2">
 											<label class="text-xl text-gray-600">Excerpt<span class="text-red-500">*</span></label></br>
-											<input type="text" class="border-2 rounded border-gray-300 p-2 w-full" name="excerpt" id="description">
+											<input type="text" class="border-2 rounded {{ $errors->has('excerpt') ? 'border-red-700' : 'border-gray-300' }}  p-2 w-full" name="excerpt" value="{{ old('excerpt') }}">
+											{!! $errors->first('excerpt', '<span class="text-red-500"> :message </span>')!!} 
 										</div>
 										<div class="row-span-2">
 											<label class="block text-left" style="max-width: 300px;">
 											<span class="text-gray-700">Tags<span class="text-red-500">*</span></span>
-											<select class="form-multiselect block w-full mt-1 text-gray rounded" multiple name="tags[]">
+											<select class="border-2 form-multiselect block w-full mt-1 text-gray rounded {{ $errors->has('tags') ? 'border-red-700' : 'border-gray-300' }}" multiple name="tags[]">
 												@foreach($tags as $tag)
-												<option value="{{ $tag->id }}">{{ $tag->name }}</option>
+												<option value="{{ $tag->id }}" {{ collect(old('tags'))->contains($tag->id) ? 'selected' : '' }}>{{ $tag->name }}</option>
 												@endforeach
 											</select>
 											</label>
+											{!! $errors->first('category', '<span class="text-red-500"> :message </span>')!!} 
 										</div>
 									</div>
 
 									<div class="grid grid-cols-2 gap-4 mt-3">
 					                    <div class="mb-3">
 											<label class="text-xl text-gray-600">Category<span class="text-red-500">*</span></label></br>
-											<select id="vehicle_id" class="border-2 rounded border-gray-300 p-2 w-full" name="category">
+											<select id="vehicle_id" class="border-2 rounded {{ $errors->has('title') ? 'border-red-700' : 'border-gray-300' }}  p-2 w-full" name="category">
 												<option value="">-- Select Category --</option>
 												@foreach($categories as $category)
-													<option value="{{ $category->id }}">{{ $category->name }}</option>	
+													<option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>	
 												@endforeach
 											</select>
+											{!! $errors->first('category', '<span class="text-red-500"> :message </span>')!!} 
 					                    </div>					                    
 					                    <div class="mb-3">
 					                        <label class="text-xl text-gray-600">Published at<span class="text-red-500">*</span></label></br>
-					                        <input type="date" class="border-2 rounded border-gray-300 p-2 w-full" name="exceprt" id="description">
+					                        <input type="date" class="border-2 rounded {{ $errors->has('title') ? 'border-red-700' : 'border-gray-300' }} p-2 w-full" name="published_at">
+					                        {!! $errors->first('published_at', '<span class="text-red-500"> :message </span>')!!} 
 					                    </div>
 				                    </div>
 				                    <div class="mb-3">
 				                        <label class="text-xl rounded text-gray-600">Content <span class="text-red-500">*</span></label></br>
-				                        <textarea id="editor" name="content" class="border-2 rounded border-gray-500"></textarea>
+				                        <textarea id="editor" name="content" class="border-2 rounded border-gray-500">{{ old('content')}}</textarea>
+				                         {!! $errors->first('content', '<span class="text-red-500"> :message </span>')!!} 
 				                    </div>
 				                   
 				                    <div class="flex p-1">

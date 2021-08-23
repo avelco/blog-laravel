@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Post, Category};
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\{Post, Category};
 
 class PagesController extends Controller
 {
@@ -14,7 +15,7 @@ class PagesController extends Controller
      */
     public function index()
     {
-        $post = Post::with(['category', 'tags'])->orderBy('id', 'desc')->take(8)->get()->values();
+        $post = Post::Published()->get();
         
         #dd($post[0]->tags[0]->name);
         return view('index', compact('post'));
@@ -47,9 +48,9 @@ class PagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        return view('post.show', compact('post'));
     }
 
     /**
@@ -95,7 +96,13 @@ class PagesController extends Controller
     public function category($category)
     {
         $category = Category::where('name', $category)->first();
-        $post = Post::where('category_id', $category->id)->with(['category', 'tags'])->orderBy('id', 'desc')->take(8)->get()->values();
+        $post = Post::where('category_id', $category->id)
+                        ->with(['category', 'tags'])
+                        ->where('published_at', '<=', Carbon::now())
+                        ->latest('published_at')
+                        ->take(8)
+                        ->get()
+                        ->values();
 
         return view('main', compact('post'));
     }
@@ -109,7 +116,7 @@ class PagesController extends Controller
     public function categoryAll($category)
     {
         $category = Category::where('name', $category)->first();
-        $posts = Post::where('category_id', $category->id)->with(['category', 'tags'])->orderBy('id', 'desc')->get()->values();
+        $posts = Post::publishedByCategory($category)->get();
 
         return view('all', compact('posts'));
     }

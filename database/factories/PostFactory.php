@@ -21,8 +21,12 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence(4);
+        $slug = str_slug($title);
+        
         return [
-            'title' => $this->faker->sentence(4),
+            'title' => $title ,
+            'url' => $slug ,
             'excerpt' => $this->faker->text(200),
             'body' => $this->faker->paragraph(4),
             'published_at' => $this->faker->dateTime(), 

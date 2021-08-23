@@ -19,6 +19,7 @@ Route::get('/', [PagesController::class, 'index'])->name('blog.index');
 
 /*Blog resources */
 Route::get('blog/category/{slug}', [PagesController::class, 'category'])->name('blog.category');
+Route::get('blog/{post}', [PagesController::class, 'show'])->name('blog.show');
 Route::get('blog/category/all/{slug}', [PagesController::class, 'categoryAll'])->name('blog.category_all');
 Route::resource('blog', PagesController::class)->except(['index']);
 

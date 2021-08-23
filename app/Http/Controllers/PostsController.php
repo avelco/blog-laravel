@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller
 {
@@ -42,14 +43,15 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $post = new Post;
         
         $post->title  = $request->get('title');
+        $post->url  = str_slug($request->get('title'));
         $post->body = $request->get('content');
         $post->excerpt = $request->get('excerpt');
-        $post->published_at = Carbon::parse($request->get('published_at'));
+        $post->published_at = $request->has($request->get('published_at')) ? Carbon::parse($request->get('published_at')) : null;
         $post->category_id = $request->get('category');
         
         $post->save();

@@ -12,6 +12,7 @@
 				
 				<div class="w-full md:w-1/3 flex flex-col flex-grow flex-shrink">
 					<div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
+						<p class="w-full text-gray-600 text-xs md:text-sm pt-6 px-6">{{ $post[0]->published_at->format('M d') }}</p>
 						<p class="w-full text-gray-600 text-xs md:text-sm pt-6 px-6">{{ $post[0]->category->name }}</p>
 						<div class="w-full font-bold text-xl text-gray-900 px-6">{{ $post[0]->title }}</div>
 						<p class="text-gray-800 font-serif text-base px-6 mb-5">

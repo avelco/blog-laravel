@@ -1,5 +1,6 @@
 @extends('layout')
-
+@section('meta-title', $post->title." | Blog")
+@section('meta-title', $post->excerpt)
 @section('content')	
       <div class="mb-4 md:mb-0 w-full  mx-auto relative" style="height: 24em;">
         <div class="absolute left-0 bottom-0 w-full h-full z-10"
@@ -33,5 +34,7 @@
         <!--post categories-->
     </main>
     <!-- main ends here -->
+    
+    @include('partials.social-links')
 
 @endsection

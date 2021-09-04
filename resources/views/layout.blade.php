@@ -3,10 +3,12 @@
     <head>
        <meta charset="UTF-8" />
        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-       <title> {{ config('app.name')}} </title>       
-
-        
+       <meta name="description" content="@yield('meta-description', 'Blog de Alejo Velasco, escritos, historias, anecdotas y demás, espacio para contarle al mundo sobre mi mundo')">
+       
+       <title> @yield('meta-title', config('app.name'). " | Blog" )   </title>    
+       
+    	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     </head>
 <body class="bg-gray-200 font-sans leading-normal tracking-normal">

@@ -63,10 +63,10 @@
 			                                <td class="py-3 px-6 text-center">
 			                                    <div class="flex item-center justify-center">
 			                                        <div class="w-4 mr-4 transform hover:scale-110">
-			                                        	<a href="{{ route('posts.edit', $post->title) }}" class="text-black-400 py-1 mx-2 hover:text-blue-600 transition duration-200 each-in-out"><i class="fas fa-eye"></i></a>
+			                                        	<a href="{{ route('posts.edit', $post->url) }}" class="text-black-400 py-1 mx-2 hover:text-blue-600 transition duration-200 each-in-out"><i class="fas fa-eye"></i></a>
 			                                        </div>
 			                                        <div class="w-4 mr-4 transform hover:scale-110">
-			                                           	<a href="{{ route('posts.destroy', $post->title) }}" class="text-black-400 py-1 mx-2 hover:text-blue-600 transition duration-200 each-in-out"><i class="fas fa-trash-alt"></i></a>
+			                                           	<a href="{{ route('posts.destroy', $post->url) }}" class="text-black-400 py-1 mx-2 hover:text-blue-600 transition duration-200 each-in-out"><i class="fas fa-trash-alt"></i></a>
 			                                        </div>
 			                                    </div>
 			                                </td>

@@ -37,13 +37,36 @@ class PostsController extends Controller
         return view('admin.posts.create', compact('categories', 'tags'));
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required'
+        ]);
+        
+        $post = new Post;
+        
+        $post->title  = $request->get('title');
+        $post->url  = str_slug($request->get('title'));
+        
+        $post->save();
+        
+        return redirect()->route('posts.edit', $post);
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+/*    public function store(PostRequest $request)
     {
         $post = new Post;
         
@@ -60,7 +83,7 @@ class PostsController extends Controller
         
         return back()->with('flash', 'Post '. $post->title. ' was created');
     }
-
+*/
     /**
      * Display the specified resource.
      *
@@ -78,9 +101,11 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -90,9 +115,20 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Post $post, PostRequest $request)
     {
-        //
+        $post->title  = $request->get('title');
+        $post->url  = str_slug($request->get('title'));
+        $post->body = $request->get('content');
+        $post->excerpt = $request->get('excerpt');
+        $post->published_at = $request->has('published_at') ? Carbon::parse($request->get('published_at')) : null;
+        $post->category_id = $request->get('category');
+
+        $post->save();
+        
+        $post->tags()->sync($request->get('tags'));
+        
+        return back()->with('flash', 'Post '. $post->title. ' was saved');
     }
 
     /**

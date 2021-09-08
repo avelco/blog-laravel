@@ -65,6 +65,19 @@
 					                    </div>
 				                    </div>
 				                    <div class="mb-3">
+										<div class="border border-dashed border-gray-500 relative dropzone">
+										    <input type="file" multiple class="cursor-pointer relative block opacity-0 w-full h-full p-20 z-50">
+										    <div class="text-center p-10 absolute top-0 right-0 left-0 m-auto">
+										        <h4>
+										            Drop files anywhere to upload
+										            <br/>or
+										        </h4>
+										        <p class="">Select Files</p>
+										    </div>
+										</div>				                    	
+				                        <div class="dropzone"></div>
+				                    </div>				                    
+				                    <div class="mb-3">
 				                        <label class="text-xl rounded text-gray-600">Content <span class="text-red-500">*</span></label></br>
 				                        <textarea id="editor" name="content" class="border-2 rounded border-gray-500">{{ old('content'), $post->body}}</textarea>
 				                         {!! $errors->first('content', '<span class="text-red-500"> :message </span>')!!} 
@@ -97,5 +110,17 @@
 	        } );
 	</script>
 @endpush
-
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" integrity="sha512-VQQXLthlZQO00P+uEu4mJ4G4OAgqTtKG1hri56kQY1DtdLeIqhKUp9W/lllDDu3uN3SnUNawpW7lBda8+dSi7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+	new Dropzone('.dropzone', 
+	{
+		'url': '/',
+		'dictDefaultMessage': ''
+	});
+	
+	Dropzone.autoDiscover = false;
+	
+</script>
+@endpush
 @endsection

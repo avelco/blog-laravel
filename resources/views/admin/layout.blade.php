@@ -155,10 +155,7 @@
 	btn.addEventListener("click", () => {
 		menu.classList.toggle("hidden");
 	});
-	
-	$(document).ready(function() {
-	    $('#table-list').DataTable();
-	} );
+
 </script>
 
 </body>

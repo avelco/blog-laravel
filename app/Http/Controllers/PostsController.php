@@ -128,7 +128,7 @@ class PostsController extends Controller
         
         $post->tags()->sync($request->get('tags'));
         
-        return back()->with('flash', 'Post '. $post->title. ' was saved');
+        return back()->route('posts.edit', $post)->with('flash', 'Post '. $post->title. ' was saved');
     }
 
     /**
